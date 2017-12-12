@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Visor Geográfico · Instituto Humboldt</title>
+        <link rel="icon" href="img/favicon.png" type="image/png">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,600,600i,700,700i|Open+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="src/leaflet.css">
+<!--         <link rel="stylesheet" href="src/plugins/L.Control.Pan.css"> -->
+        <link rel="stylesheet" href="src/plugins/L.Control.Zoomslider.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.BetterScale.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.ZoomBar.css">
+        <link rel="stylesheet" href="src/plugins/Control.FullScreen.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.MousePosition.css">
+        <link rel="stylesheet" href="src/plugins/iconLayers.css"> 
+        <link rel="stylesheet" href="src/plugins/L.Control.HtmlLegend.css"> 
+        <link rel="stylesheet" href="src/plugins/StyledLayerControl/css/styledLayerControl.css">
+        <link rel="stylesheet" href="src/css/styles.css">
+
+
+
+
+        <script src="src/leaflet-src.js"></script>
+        <script src="src/jquery-3.2.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+        <script src="src/plugins/L.Control.Pan.js"></script>
+        <script src="src/plugins/L.Control.Zoomslider.js"></script>
+        <script src="src/plugins/L.Control.BetterScale.js"></script>
+        <script src="src/plugins/L.Control.ZoomBar.js"></script>
+        <script src="src/plugins/Map.TwoFingerZoom.js"></script>
+        <script src="src/plugins/Control.FullScreen.js"></script>
+        <script src="src/plugins/Control.GlobeMiniMap.js"></script>
+        <script src="src/plugins/L.Control.MousePosition.js"></script>
+        <script src="src/plugins/iconLayers.js"></script>
+        <script src="src/plugins/L.Control.HtmlLegend.js"></script>
+        <script src="src/plugins/StyledLayerControl/src/styledLayerControl.js"></script>
+        <script src="src/plugins/leaflet.wms.js"></script>
+        
+    </head>
+
+    <body>
+
+
+        <header>
+            <div class="logo">
+                <a href="http://datos.humboldt.org.co"><img src="img/logo.png" alt="Infraestructura Institucional de Datos e Información"></img></a>
+                <h1>VISOR<br>geográfico</h1>
+            </div>
+            <a href="http://humboldt.org.co" target="_blank" class="humboldt"><img src="img/humboldt.png" alt="Instituto de Investigación de Recursos Biológicos Alexander von Humboldt"></a>
+        </header>
+        <!--Leyenda capas Historicas-->
+        <div id="lgn_aicas" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Historicos/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=aicas&format=image/png">
+        </div>
+
+        <div id="lgn_bosque_seco_tropical" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Historicos/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=bosque_seco_tropical&format=image/png">
+        </div>
+
+        <div id="lgn_complejos_paramos_escala100k" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Historicos/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=complejos_paramos_escala100k&format=image/png">
+        </div>
+
+
+        <div id="lgn_ecosistemas_cuenca_rio_orinoco" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Historicos/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=ecosistemas_cuenca_rio_orinoco&format=image/png">
+        </div>
+
+        <div id="lgn_ecosistemas_generales_etter" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Historicos/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=ecosistemas_generales_etter&format=image/png">
+        </div>
+
+
+        <div id="lgn_grado_transformacion_humedales_m10k" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Historicos/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=grado_transformacion_humedales_m10k&format=image/png">
+        </div>
+
+
+        <!--Leyenda capas Fondo de adaptación-->
+        <div id="lgn_Humedales_Continentales_Insulares_2015_Vector" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=Humedales_Continentales_Insulares_2015_Vector&format=image/png">
+        </div>
+
+
+        <div id="lgn_Limites24Paramos_25K_2016" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=Limites24Paramos_25K_2016&format=image/png">
+        </div>
+
+        <div id="lgn_Limites21Paramos_25K_2015" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=Limites21Paramos_25K_2015&format=image/png">
+        </div>
+
+
+        <!--Leyenda capas Proyecto Oleoducto Bicentenario-->
+        <div id="lgn_coberturas_bo_2009_2010" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Proyecto_oleoducto_bicentenario/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=coberturas_bo_2009_2010&format=image/png">
+        </div>
+
+
+        <div id="mapdiv" class="mapdiv"></div>
+
+        <footer>
+            <p> Infraestructura Institucional de</br>Datos e Información © 2017</p>
+            <div class="links">
+                <a href="http://i2d.humboldt.org.co/ceiba/" target="_blank" class="linksftr">Ceiba</a>
+                <a href="http://geonetwork.humboldt.org.co/" target="_blank" class="linksftr">Geonetwork</a>
+                <a href="https://sites.google.com/humboldt.org.co/i2dwiki/inicio" target="_blank" class="linksftr">Guías</a>
+                <a href="mailto:i2d@humboldt.org.co" target="_blank" class="linksftr">Contacto</a>
+            </div>
+        </footer>
+
+        <script>
+            var mymap;
+            var ctlAttribute;
+            var ctlScale;
+            // var ctlPan;
+            var crtZoombar;
+            var ctrMouseposition;
+            var ctlFullscreen;
+            var miniMap;
+
+            //web map service
+
+            
+            $(document).ready(function(){
+
+            var southWest = L.latLng(-25.87899, -127.08984),
+            northEast = L.latLng(33.50476, -21.18164),
+            bounds = L.latLngBounds(southWest, northEast);
+
+
+            mymap = L.map('mapdiv', {center:[4.375562, -74.106870], maxBounds: bounds, zoom:4, maxZoom: 19, minZoom: 4,  zoomControl:false, attributionControl:false, twoFingerZoom: true});
+
+
+
+            //Capas Historicas
+            var source_historicos = L.wms.source(
+            "http://geoservicios.humboldt.org.co/geoserver/Historicos/wms",
+            {
+            "format": "image/png",
+            "transparent": "true",
+            "attribution": "<a href='http://www.humboldt.org.co'>Instituto Humboldt</a>",
+            "info_format": "text/html"
+           
+            }        
+            );
+
+            var iavhHAicas = source_historicos.getLayer("aicas");
+            var iavhHBST = source_historicos.getLayer("bosque_seco_tropical");
+            var iavhHCP100 = source_historicos.getLayer("complejos_paramos_escala100k");
+            var iavhHECRO  = source_historicos.getLayer("ecosistemas_cuenca_rio_orinoco");
+            var iavhHEGE = source_historicos.getLayer("ecosistemas_generales_etter");
+            var iavhHGTH10 = source_historicos.getLayer("grado_transformacion_humedales_m10k");
+
+
+            //Capas Fondo de adaptación
+            var source_proyecto_fondo_adaptacion = L.wms.source(
+            "http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms",
+            {
+            "format": "image/png",
+            "transparent": "true",
+            "attribution": "<a href='http://www.humboldt.org.co'>Instituto Humboldt</a>",
+            "info_format": "text/html"
+           
+            }        
+            );
+
+
+            
+            var iavhFHCI2015 = source_proyecto_fondo_adaptacion.getLayer("Humedales_Continentales_Insulares_2015_Vector");
+            var iavhFLP2015 = source_proyecto_fondo_adaptacion.getLayer("Limites21Paramos_25K_2015");
+            var iavhFLP2016 = source_proyecto_fondo_adaptacion.getLayer("Limites24Paramos_25K_2016");
+ 
+    
+            //Capas Proyecto Oleoducto Bicentenario
+            var source_proyecto_oleoducto_bicentenario = L.wms.source(
+            "http://geoservicios.humboldt.org.co/geoserver/Proyecto_oleoducto_bicentenario/wms",
+            {
+            "format": "image/png",
+            "transparent": "true",
+            "attribution": "<a href='http://www.humboldt.org.co'>Instituto Humboldt</a>",
+            "info_format": "text/html"
+           
+            }        
+            );
+
+            var iavhPBCob = source_proyecto_oleoducto_bicentenario.getLayer("coberturas_bo_2009_2010");
+
+
+
+
+
+         //Capas Proyecto PACBAO Ecopetrol
+
+            var source_proyecto_PACBAO = L.wms.source(
+            "http://geoservicios.humboldt.org.co/geoserver/Proyecto_PACBAO_Ecopetrol/wms",
+            {
+            "format": "image/png",
+            "transparent": "true",
+            "attribution": "<a href='http://www.humboldt.org.co'>Instituto Humboldt</a>",
+            "info_format": "text/html"
+           
+            }        
+            );
+
+
+            var iavhPPCBio = source_proyecto_PACBAO.getLayer("Biomas");
+            var iavhPPCca = source_proyecto_PACBAO.getLayer("colapso_acuatico");
+            var iavhPPCct = source_proyecto_PACBAO.getLayer("colapso_terrestre");
+            var iavhPPCt = source_proyecto_PACBAO.getLayer("colapso_total");
+            var iavhPPCdb = source_proyecto_PACBAO.getLayer("distritos_biogeograficos");
+            var iavhPPChb = source_proyecto_PACBAO.getLayer("hidrobiologia");
+            var iavhPPCln  = source_proyecto_PACBAO.getLayer("lineamientos");
+            var iavhPPCmc = source_proyecto_PACBAO.getLayer("meta_conservacion");
+            var iavhPPCun = source_proyecto_PACBAO.getLayer("unicidad");
+            var iavhPPCuna = source_proyecto_PACBAO.getLayer("unidades_analisis");
+
+
+
+            //Registros CEIBA
+
+            var source_registros_ceiba = L.wms.source(
+            "http://geoservicios.humboldt.org.co/geoserver/Registros_Ceiba/wms",
+            {
+            "format": "image/vnd.jpeg-png",
+            "transparent": "true",
+            "attribution": "<a href='http://www.humboldt.org.co'>Instituto Humboldt</a>",
+            "info_format": "text/html"
+           
+            }        
+            );
+
+            var iavhreg_ceiba = source_registros_ceiba.getLayer("Registros_Ceiba");
+
+ 
+
+
+         // Mapas Base //
+            
+            var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                  });
+
+            var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                });
+
+
+            var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+                });
+
+            var OpenMapSurfer_Roads = L.tileLayer('https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            });
+
+            var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                });
+
+            var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.{ext}', {
+                    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    subdomains: 'abcd',
+                    minZoom: 0,
+                    maxZoom: 19,
+                    ext: 'png'
+                });
+
+
+            var NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
+                    attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
+                    bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
+                    minZoom: 1,
+                    maxZoom: 8,
+                    format: 'jpg',
+                    time: '',
+                    tilematrixset: 'GoogleMapsCompatible_Level'
+                });
+
+            OpenStreetMap_Mapnik.addTo(mymap);
+
+
+
+                var options = {
+                container_width     : "300px",
+                container_maxHeight : "300px", 
+                group_maxHeight     : "80px",
+                exclusive           : true
+                             };
+
+                
+                // ctlPan = L.control.pan().addTo(mymap);
+                crtZoombar = new L.Control.ZoomBar({position: 'topleft'}).addTo(mymap);
+                               
+                ctlScale = L.control.betterscale({position:'bottomleft', metric:true, imperial:false, maxWidth:250}).addTo(mymap);
+                ctrMouseposition = L.control.mousePosition({position: 'bottomright', lngFormatter: function(num) {
+                    var direction = (num < 0) ? 'W' : 'E';
+                    var formatted = Math.abs(L.Util.formatNum(num, 3)) + 'º ' + direction;
+                    return formatted; 
+                    },latFormatter: function(num) {
+                    var direction = (num < 0) ? 'S' : 'N';
+                    var formatted = Math.abs(L.Util.formatNum(num, 3)) + 'º ' + direction;
+                    return formatted;
+                    }}).addTo(mymap);
+                ctlAttribute = L.control.attribution({position:'bottomright'}).addTo(mymap); 
+
+
+                ctlFullscreen = L.control.fullscreen({
+                    position: 'topright',
+                    title: 'Mostrar mapa en pantalla completa',
+                    titleCancel: 'Salir de pantalla completa'
+                }).addTo(mymap);
+
+
+                
+    var htmlLegend1 = L.control.htmllegend({
+        position: 'bottomright',
+        legends: [{
+            name: 'Aicas',
+            layer: iavhHAicas,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_aicas').innerHTML,
+
+            }
+            ]
+        }, {
+            name: 'Bosque Seco Tropical',
+            layer: iavhHBST,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_bosque_seco_tropical').innerHTML,
+
+            }]
+        },
+        {
+            name: 'Complejos paramos escala100k',
+            layer: iavhHCP100,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_complejos_paramos_escala100k').innerHTML,
+
+            }]
+        },
+        {
+            name: 'Ecosistemas Cuenca Rio Orinoco',
+            layer: iavhHECRO,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_ecosistemas_cuenca_rio_orinoco').innerHTML,
+
+            }]
+        },
+                {
+            name: 'Ecosistemas Generales Etter',
+            layer: iavhHEGE,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_ecosistemas_generales_etter').innerHTML,
+
+            }]
+        },
+        {
+            name: 'Grado de Trans. Humedales m10k',
+            layer: iavhHGTH10,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_grado_transformacion_humedales_m10k').innerHTML,
+
+            }]
+        },
+         {
+            name: 'Humedales Continentales Insulares 2015',
+            layer: iavhFHCI2015,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_Humedales_Continentales_Insulares_2015_Vector').innerHTML,
+
+            }]
+        },
+
+            {
+            name: 'Limites 21 Paramos 25K 2015',
+            layer: iavhFLP2015,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_Limites21Paramos_25K_2015').innerHTML,
+
+            }]
+        },
+           {
+            name: 'Limites 24 Paramos 25K 2016',
+            layer: iavhFLP2016,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_Limites24Paramos_25K_2016').innerHTML,
+
+            }]
+        },
+        {
+            name: 'Coberturas Oleoducto Bicentenario 2009-2010',
+            layer: iavhPBCob,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_coberturas_bo_2009_2010').innerHTML,
+
+            }]
+        },
+            ],
+            collapseSimple: true,
+            detectStretched: true,
+            collapsedOnInit: true,
+            defaultOpacity: 0.8,
+            visibleIcon: 'icon icon-eye',
+            hiddenIcon: 'icon icon-eye-slash'
+    });
+    mymap.addControl(htmlLegend1);
+
+
+    var wmsLayers = [
+                           {
+                             groupName : "WMS Histórico",
+                             expanded : false,
+                             layers : {
+    
+                                      "Aicas": iavhHAicas,
+                                      "Bosque Seco Tropical": iavhHBST,
+                                      "Complejos Páramos Escala 100k": iavhHCP100,
+                                      "Ecosistemas Cuenca Rio Orinoco": iavhHECRO,
+                                      "Ecosistemas Generales Etter": iavhHEGE,
+                                      "Grado Transformación Humedales 10k": iavhHGTH10
+                                      }
+                          }, {
+                             groupName : "WMS Fondo Adaptación",
+                             expanded : false,
+                             layers : {
+
+                                     "Humedales Continentales e Insulares 2015": iavhFHCI2015,
+                                     "Límite 21 Complejos de Páramo 2015": iavhFLP2015,
+                                     "Límite 24 Complejos de Páramo 2016": iavhFLP2016
+                                      }
+                          }, {
+                             groupName : "WMS Proyecto Oleoducto Bicentenario",
+                             expanded : false,
+                             layers : {
+                                    "Cobertura Bo": iavhPBCob
+                                      }
+                          }, {
+                             groupName : "WMS Conservación de la Biodiversidad",
+                             expanded : false,
+                             layers : {
+
+                             "Biomas": iavhPPCBio,
+                             "Colapso Acuático": iavhPPCca,
+                             "Colapso Terrestre": iavhPPCct,
+                             "Colapso Total": iavhPPCt,
+                             "Distritos Biogeográficos": iavhPPCdb,
+                             "Hidrobiología": iavhPPChb,
+                             "Lineamientos": iavhPPCln,
+                             "Meta Conservación": iavhPPCmc,
+                             "Unicidad": iavhPPCun,
+                             "Unidades de Análisis": iavhPPCuna,
+                        }
+                    },{
+                             groupName : "WMS Registros CEIBA",
+                             expanded : false,
+                             layers : {
+
+                             "Registros CEIBA": iavhreg_ceiba,
+
+                        }
+                    }
+
+                ];
+
+
+
+            var iconLayersControl = new L.Control.IconLayers(
+                [
+                    {
+                        title: 'OSM',
+                        layer: OpenStreetMap_Mapnik,
+                        icon: '/webmap/src/plugins/images/openstreetmap_mapnik.png'
+                    },
+
+                    {
+                        title: 'OTM',
+                        layer: OpenTopoMap,
+                        icon: 'images/openstreetmap_mapnik.png'
+                    },
+                    {
+                        title: 'B & W',
+                        layer: OpenStreetMap_BlackAndWhite,
+                        icon: 'images/openstreetmap_mapnik.png'
+                    },
+                    {
+                        title: 'OMSR',
+                        layer: OpenMapSurfer_Roads,
+                        icon: 'images/openstreetmap_mapnik.png'
+                    },
+                    {
+                        title: 'Stamen',
+                        layer: Stamen_Terrain,
+                        icon: '/webmap/src/plugins/images/stamen.png'
+                    },
+                    {
+                        title: 'NASA', // use any string
+                        layer: NASAGIBS_ViirsEarthAtNight2012, // any ILayer
+                        icon: 'images/openstreetmap_mapnik.png' // 80x80 icon
+                    }
+                     
+                ],  {
+                 position: 'bottomleft',
+                 maxLayersInRow: 3,
+                 manageLayers: true
+                 }
+            );
+
+            iconLayersControl.on('activelayerchange', function(e) {
+                console.log('layer switched', e.layer);
+            });
+
+            iconLayersControl.addTo(mymap);
+
+            var control = L.Control.styledLayerControl(null, wmsLayers).addTo(mymap);
+                     
+
+            })
+              
+        </script>
+    </body>
+</html>
