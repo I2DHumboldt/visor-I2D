@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="src/plugins/L.Control.HtmlLegend.css"> 
         <link rel="stylesheet" href="src/plugins/StyledLayerControl/css/styledLayerControl.css">
         <link rel="stylesheet" href="src/css/styles.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Sidebar.css">
+        <link rel="stylesheet" href="src/plugins/easy-button.css">
 
 
 
@@ -36,6 +38,8 @@
         <script src="src/plugins/L.Control.HtmlLegend.js"></script>
         <script src="src/plugins/StyledLayerControl/src/styledLayerControl.js"></script>
         <script src="src/plugins/leaflet.wms.js"></script>
+        <script src="src/plugins/L.Control.Sidebar.js"></script>
+        <script src="src/plugins/easy-button.js"></script>
         
     </head>
 
@@ -49,6 +53,66 @@
             </div>
             <a href="http://humboldt.org.co" target="_blank" class="humboldt"><img src="img/humboldt.png" alt="Instituto de Investigación de Recursos Biológicos Alexander von Humboldt"></a>
         </header>
+
+
+        <div id="side-bar" class="col-md-3">
+            
+            <h3>Capas Geográficas Descargables</h3>
+
+            <h4>Históricos</h4>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:aicas&outputFormat=SHAPE-ZIP">Aicas</a> <br>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:bosque_seco_tropical&outputFormat=SHAPE-ZIP">Bosque seco tropical</a> <br>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:complejos_paramos_escala100k&outputFormat=SHAPE-ZIP">Complejos paramos escala 1:100000</a> <br>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:ecosistemas_generales_etter&outputFormat=SHAPE-ZIP">Ecosistemas generales Etter</a> <br>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:grado_transformacion_humedales_m10k&outputFormat=SHAPE-ZIP">Grado de transformacion de humedales</a> <br>
+
+            <h4>Proyecto Fondo de Adaptación</h4>
+
+            <a href="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:Limites21Paramos_25K_2015&outputFormat=SHAPE-ZIP">Grado de transformación de humedales</a> <br>
+
+            <a href="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:Limites21Paramos_25K_2015&outputFormat=SHAPE-ZIP">Limites paramos escala 1:25000 año 2015</a> <br>
+
+            <a href="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:Limites24Paramos_25K_2016&outputFormat=SHAPE-ZIP">Limites paramos escala 1:25000 año 2016</a> <br>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:inventario_humedales&outputFormat=SHAPE-ZIP">Inventario humedales</a> <br>
+
+            <h4>Proyecto Oleoducto Bicentenario</h4>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_oleoducto_bicentenario/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_oleoducto_bicentenario:coberturas_bo_2009_2010&outputFormat=SHAPE-ZIP">Inventario humedales</a> <br>
+
+            
+            <h4>Proyecto Planeación Ambiental para la Conservación de la Biodiversidad en las Áreas Operativas de Ecopetrol</h4>
+
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:Biomas&outputFormat=SHAPE-ZIP">Biomas</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:colapso_acuatico&outputFormat=SHAPE-ZIP">Colapso acuatico</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:colapso_terrestre&outputFormat=SHAPE-ZIP">Colapso terrestre</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:colapso_total&outputFormat=SHAPE-ZIP">Colapso total</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:distritos_biogeograficos&outputFormat=SHAPE-ZIP">Distritos biogeográficos</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:hidrobiologia&outputFormat=SHAPE-ZIP">Hidrobiología</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:meta_conservacion&outputFormat=SHAPE-ZIP">Meta conservación</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:unicidad&outputFormat=SHAPE-ZIP">Unicidad</a> <br>
+
+             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_PACBAO_Ecopetrol/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_PACBAO_Ecopetrol:unidades_analisis&outputFormat=SHAPE-ZIP">Unidades análisis</a> <br>
+
+
+           
+
+            
+
+        </div>
+
         <!--Leyenda capas Historicas-->
         <div id="lgn_aicas" class="invisible">
             <img src="http://geoservicios.humboldt.org.co/geoserver/Historicos/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=aicas&format=image/png">
@@ -119,6 +183,8 @@
             var ctrMouseposition;
             var ctlFullscreen;
             var miniMap;
+            var ctlEasybutton;
+            var ctlSidebar;
 
             //web map service
 
@@ -315,6 +381,12 @@
                     position: 'topright',
                     title: 'Mostrar mapa en pantalla completa',
                     titleCancel: 'Salir de pantalla completa'
+                }).addTo(mymap);
+
+                 ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
+                
+                ctlEasybutton = L.easyButton('glyphicon-transfer', function(){
+                   ctlSidebar.toggle(); 
                 }).addTo(mymap);
 
 
