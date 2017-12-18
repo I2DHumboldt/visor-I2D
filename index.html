@@ -395,7 +395,7 @@
 
 
             var NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
-                    attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
+                    attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/(<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
                     bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
                     minZoom: 1,
                     maxZoom: 8,
@@ -441,6 +441,7 @@
                  ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
                 
                 ctlEasybutton = L.easyButton('glyphicon-transfer', function(){
+                    position: 'topright',
                    ctlSidebar.toggle(); 
                 }).addTo(mymap);
 
@@ -561,7 +562,7 @@
 
     var wmsLayers = [
                            {
-                             groupName : "WMS Histórico",
+                             groupName : "Histórico",
                              expanded : false,
                              layers : {
     
@@ -573,7 +574,7 @@
                                       "Grado Transformación Humedales 10k": iavhHGTH10
                                       }
                           }, {
-                             groupName : "WMS Fondo Adaptación",
+                             groupName : "Fondo Adaptación",
                              expanded : false,
                              layers : {
 
@@ -582,13 +583,13 @@
                                      "Límite 24 Complejos de Páramo 2016": iavhFLP2016
                                       }
                           }, {
-                             groupName : "WMS Proyecto Oleoducto Bicentenario",
+                             groupName : "Proyecto Oleoducto Bicentenario",
                              expanded : false,
                              layers : {
                                     "Cobertura Bo": iavhPBCob
                                       }
                           }, {
-                             groupName : "WMS Conservación de la Biodiversidad",
+                             groupName : "Conservación de la Biodiversidad",
                              expanded : false,
                              layers : {
 
@@ -604,7 +605,7 @@
                              "Unidades de Análisis": iavhPPCuna,
                         }
                     },{
-                             groupName : "WMS Registros CEIBA",
+                             groupName : "Registros CEIBA",
                              expanded : false,
                              layers : {
 
