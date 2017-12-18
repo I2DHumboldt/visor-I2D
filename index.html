@@ -67,19 +67,17 @@
 
             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:complejos_paramos_escala100k&outputFormat=SHAPE-ZIP">Complejos paramos escala 1:100000</a> <br>
 
-            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:ecosistemas_generales_etter&outputFormat=SHAPE-ZIP">Ecosistemas generales Etter</a> <br>
+            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:ecosistemas_generales_etter&outputFormat=SHAPE-ZIP">Ecosistemas generales Etter escala 1:2.000.000</a> <br>
 
             <a href="http://geoservicios.humboldt.org.co:80/geoserver/Historicos/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Historicos:grado_transformacion_humedales_m10k&outputFormat=SHAPE-ZIP">Grado de transformacion de humedales</a> <br>
 
             <h4>Proyecto Fondo de Adaptación</h4>
 
-            <a href="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:Limites21Paramos_25K_2015&outputFormat=SHAPE-ZIP">Grado de transformación de humedales</a> <br>
 
             <a href="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:Limites21Paramos_25K_2015&outputFormat=SHAPE-ZIP">Limites paramos escala 1:25000 año 2015</a> <br>
 
             <a href="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:Limites24Paramos_25K_2016&outputFormat=SHAPE-ZIP">Limites paramos escala 1:25000 año 2016</a> <br>
 
-            <a href="http://geoservicios.humboldt.org.co:80/geoserver/Proyecto_fondo_adaptacion/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Proyecto_fondo_adaptacion:inventario_humedales&outputFormat=SHAPE-ZIP">Inventario humedales</a> <br>
 
             <h4>Proyecto Oleoducto Bicentenario</h4>
 
@@ -197,6 +195,12 @@
 
 
         <!--Leyenda capas Fondo de adaptación-->
+
+        <div id="lgn_Humedales_2012" class="invisible">
+            <img src="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=Humedales&format=image/png">
+        </div>
+
+
         <div id="lgn_Humedales_Continentales_Insulares_2015_Vector" class="invisible">
             <img src="http://geoservicios.humboldt.org.co/geoserver/Proyecto_fondo_adaptacion/wms?service=wms&version=1.1.1&request=GetLegendGraphic&layer=Humedales_Continentales_Insulares_2015_Vector&format=image/png">
         </div>
@@ -288,10 +292,11 @@
             );
 
 
-            
+            var iavhH2012 = source_proyecto_fondo_adaptacion.getLayer("Humedales");
             var iavhFHCI2015 = source_proyecto_fondo_adaptacion.getLayer("Humedales_Continentales_Insulares_2015_Vector");
             var iavhFLP2015 = source_proyecto_fondo_adaptacion.getLayer("Limites21Paramos_25K_2015");
             var iavhFLP2016 = source_proyecto_fondo_adaptacion.getLayer("Limites24Paramos_25K_2016");
+
  
     
             //Capas Proyecto Oleoducto Bicentenario
@@ -508,6 +513,16 @@
 
             }]
         },
+        {
+            name: 'Humedales versión 2012',
+            layer: iavhH2012,
+            opacity: 0.5,
+            elements: [{
+                label:' ',
+                html: document.querySelector('#lgn_Humedales_2012').innerHTML,
+
+            }]
+        },
          {
             name: 'Humedales Continentales Insulares 2015',
             layer: iavhFHCI2015,
@@ -562,7 +577,7 @@
 
     var wmsLayers = [
                            {
-                             groupName : "Histórico",
+                             groupName : "Historicos",
                              expanded : false,
                              layers : {
     
@@ -574,10 +589,10 @@
                                       "Grado Transformación Humedales 10k": iavhHGTH10
                                       }
                           }, {
-                             groupName : "Fondo Adaptación",
+                             groupName : "Fondo de adaptación",
                              expanded : false,
                              layers : {
-
+                                     "Humedales versión 2012": iavhH2012,
                                      "Humedales Continentales e Insulares 2015": iavhFHCI2015,
                                      "Límite 21 Complejos de Páramo 2015": iavhFLP2015,
                                      "Límite 24 Complejos de Páramo 2016": iavhFLP2016
