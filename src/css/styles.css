@@ -204,3 +204,53 @@ div[id^="leaflet-control-accordion-layers"] > label {
 	height: auto;
 	width: 500px;
 }
+
+.leaflet-html-legend h4 > span {
+	max-width: 210px;
+}
+
+.leaflet-sidebar {
+  padding: 2px !important;
+}
+
+.leaflet-sidebar h3 {
+	text-transform: uppercase;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #0d4853;
+	letter-spacing: 1px;
+	color: #0d4853;
+}
+
+.leaflet-sidebar h4 {
+	margin-bottom: 10px;
+	margin-top: 20px;
+	padding: 3px 5px;
+	color: #fff;
+	background-color: #4787a4;
+	font-weight: 300;
+	letter-spacing: 1px;
+}
+
+.leaflet-sidebar a {
+	text-decoration: none;
+}
+
+.leaflet-sidebar a:hover {
+	color: #0d4853;
+}
+
+.leaflet-sidebar a:before {
+	content: "·  ";
+}
+
+.leaflet-sidebar a:last-of-type {
+	padding-bottom: 30px;
+}
+
+@media (max-width: 600px) {
+
+	footer p {
+		display: none;
+	}
+
+}
